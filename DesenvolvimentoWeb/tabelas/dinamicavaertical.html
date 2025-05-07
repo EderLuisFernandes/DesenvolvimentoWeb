@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Tabela Vertical Dinâmica</title>
+  <style>
+    body{
+        align-items: center;
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: center;
+    }
+    input {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Tabela Vertical Dinâmica</h2>
+
+  <div>
+    <label>Cabeçalho:</label><br>
+    <input type="text" id="headerInput" placeholder="Ex: Nome">
+    <button onclick="adicionarCabecalho()">Adicionar Cabeçalho</button>
+  </div>
+
+  <div id="colForm" style="display: none;">
+    <label>Adicionar Dados</label><br>
+    <textarea id="dataInput" rows="5" cols="30" placeholder="Digite os dados na ordem dos cabeçalhos, um por linha..."></textarea><br>
+    <button onclick="adicionarColuna()">Adicionar Coluna de Dados</button>
+  </div>
+
+  <table id="tabelaVertical">
+    <tbody id="corpoTabela"></tbody>
+  </table>
+
+  <script>
+    function adicionarCabecalho() {
+      const headerText = document.getElementById("headerInput").value.trim();
+      if (!headerText) return;
+
+      const corpo = document.getElementById("corpoTabela");
+
+      const tr = document.createElement("tr");
+      const th = document.createElement("th");
+      th.textContent = headerText;
+      tr.appendChild(th);
+      corpo.appendChild(tr);
+
+      document.getElementById("headerInput").value = "";
+      document.getElementById("colForm").style.display = "block";
+    }
+
+    function adicionarColuna() {
+      const dataText = document.getElementById("dataInput").value.trim();
+      if (!dataText) return;
+
+      const dados = dataText.split("\n"); // separa os dados por linha
+      const linhas = document.querySelectorAll("#corpoTabela tr");
+
+      if (dados.length !== linhas.length) {
+        alert("A quantidade de dados deve ser igual à quantidade de cabeçalhos!");
+        return;
+      }
+
+      for (let i = 0; i < linhas.length; i++) {
+        const td = document.createElement("td");
+        td.textContent = dados[i];
+        linhas[i].appendChild(td);
+      }
+
+      document.getElementById("dataInput").value = "";
+    }
+  </script>
+</body>
+</html>

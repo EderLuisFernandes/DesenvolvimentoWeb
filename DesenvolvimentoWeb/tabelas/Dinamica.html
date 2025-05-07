@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Tabela Horizontal Dinâmica</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: left;
+    }
+    input {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Tabela Horizontal Dinâmica</h2>
+
+  <div>
+    <label>Cabeçalho:</label><br>
+    <input type="text" id="headerInput" placeholder="Ex: Nome">
+    <button onclick="adicionarCabecalho()">Adicionar Cabeçalho</button>
+  </div>
+
+  <div id="rowForm" style="display: none;">
+    <label>Adicionar Dado:</label><br>
+    <input type="text" id="dataInput" placeholder="Ex: João">
+    <button onclick="adicionarDado()">Adicionar Dado</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr id="cabecalho"></tr>
+    </thead>
+    <tbody>
+      <tr id="linhaDados"></tr>
+    </tbody>
+  </table>
+
+  <script>
+    function adicionarCabecalho() {
+      const headerText = document.getElementById("headerInput").value.trim();
+      if (!headerText) return;
+
+      const th = document.createElement("th");
+      th.textContent = headerText;
+      document.getElementById("cabecalho").appendChild(th);
+
+      const td = document.createElement("td");
+      td.textContent = "-"; 
+      document.getElementById("linhaDados").appendChild(td);
+
+      document.getElementById("headerInput").value = "";
+      document.getElementById("rowForm").style.display = "block";
+    }
+
+    function adicionarDado() {
+      const dataText = document.getElementById("dataInput").value.trim();
+      if (!dataText) return;
+
+      const linha = document.getElementById("linhaDados");
+      const cells = linha.getElementsByTagName("td");
+
+   
+      for (let i = 0; i < cells.length; i++) {
+        if (cells[i].textContent === "-") {
+          cells[i].textContent = dataText;
+          break;
+        }
+      }
+
+      document.getElementById("dataInput").value = "";
+    }
+  </script>
+</body>
+</html>
